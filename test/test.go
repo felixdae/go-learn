@@ -2,6 +2,7 @@ package main
 
 import (
     "fmt"
+    "runtime"
 )
 
 func main (){
@@ -21,4 +22,5 @@ func main (){
 
     test_closure()
     test_slice()
+    fmt.Println(runtime.GOMAXPROCS(0), runtime.NumCPU());
 }

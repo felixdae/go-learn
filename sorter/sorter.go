@@ -15,10 +15,6 @@ import (
     "github.com/felixdae/go-learn/sorter/algorithms/qsort"
 )
 
-var infile *string = flag.String("i", "unsorted.data", "File contains values for sorting")
-var outfile *string = flag.String("o", "sorted.data", "File contains sorted values")
-var algorithm *string = flag.String("a", "qsort", "algorithm")
-
 func readValues(infile string) (values []int, err error) {
     file, err := os.Open(infile)
     if err != nil {
@@ -69,7 +65,7 @@ func writeValues(values []int, outfile string) error {
 
     defer file.Close()
 
-    for _,value := range values {
+    for _, value := range values {
         str := strconv.Itoa(value)
         file.WriteString(str + "\n")
     }
@@ -77,6 +73,10 @@ func writeValues(values []int, outfile string) error {
 }
 
 func main() {
+    var infile *string = flag.String("i", "unsorted.data", "File contains values for sorting")
+    var outfile *string = flag.String("o", "sorted.data", "File contains sorted values")
+    var algorithm *string = flag.String("a", "qsort", "algorithm")
+
     flag.Parse()
 
     if infile != nil {
@@ -87,18 +87,18 @@ func main() {
     if err == nil {
         t1 := time.Now()
         switch *algorithm {
-            case "qsort":
-                qsort.QuickSort(values)
-            case "bubblesort":
-                bubblesort.BubbleSort(values)
-            default:
-                fmt.Println("unknown algorithm:", *algorithm)
-       }
-       t2 := time.Now()
+        case "qsort":
+            qsort.QuickSort(values)
+        case "bubblesort":
+            bubblesort.BubbleSort(values)
+        default:
+            fmt.Println("unknown algorithm:", *algorithm)
+        }
+        t2 := time.Now()
 
-       fmt.Println("using time:", t2.Sub(t1))
-       writeValues(values, *outfile)
-   } else {
-       fmt.Println(err)
-   }
+        fmt.Println("using time:", t2.Sub(t1))
+        writeValues(values, *outfile)
+    } else {
+        fmt.Println(err)
+    }
 }
